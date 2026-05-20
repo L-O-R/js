@@ -168,5 +168,3 @@ todoList.push(task)
 This trims whitespace and prevents empty tasks from being added.
 
 ---
-
-If you'd like, I can also implement validation and localStorage persistence directly in `script.js`. Tell me which improvements you want and I'll update the code.
