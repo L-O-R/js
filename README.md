@@ -120,10 +120,14 @@ function render(){
 Line-by-line explanation:
 
 - `let todoForm = document.querySelector("form")`: Selects the first `<form>` element in the document and stores it in the variable `todoForm`. `document.querySelector` returns the first match; useful for CSS selectors.
+
 - (blank line): Improves readability; no effect at runtime.
 - `let todoList = [];`: Initializes an empty JavaScript array `todoList` that will hold the user's tasks.
+
 - `todoForm.addEventListener("submit", (event) => {`: Attaches an event listener to the form for the `submit` event. When the user clicks the submit button or presses Enter in the input, this callback runs. The callback receives an `event` object.
+
 - `  event.preventDefault()`: Prevents the browser's default submit behavior (which would reload or navigate the page). This lets JavaScript handle the data without a page reload.
+
 - `  //  validation`: A comment indicating where you could add input validation (e.g., check the input isn't empty). Right now no actual validation code is implemented.
 - `  let task = event.target[0].value`: Reads the value of the first form control (index 0) from `event.target`, which is the form element. This retrieves the text the user typed. Note: using `event.target.elements` or `document.getElementById('task-input')` is often clearer than numeric indexes.
 - `  todoList.push(task);`: Adds the new task string to the `todoList` array.
