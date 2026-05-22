@@ -1,0 +1,416 @@
+/* Apple Monochrome (Gray, Black, White) Theme - Glassmorphism */
+
+:root {
+    /* Color Palette - strictly gray, black, and white */
+    --bg-gradient-start: #f5f5f7;
+    --bg-gradient-end: #dcdcdc;
+    
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-bg-hover: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.03);
+    --glass-blur: blur(25px);
+    
+    --item-bg: rgba(255, 255, 255, 0.5);
+    --item-border: rgba(0, 0, 0, 0.03);
+    --item-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+
+    --text-primary: #1d1d1f;
+    --text-secondary: #555555;
+    --text-light: #999999;
+    
+    --accent-gradient: linear-gradient(135deg, #000000 0%, #3a3a3c 100%);
+    --accent-shadow: rgba(0, 0, 0, 0.08);
+    --accent-color: #000000;
+
+    --edit-btn-bg: rgba(0, 0, 0, 0.04);
+    --edit-btn-text: #1d1d1f;
+    --edit-btn-hover: #1d1d1f;
+
+    --del-btn-bg: rgba(0, 0, 0, 0.04);
+    --del-btn-text: #777777;
+    --del-btn-hover: #777777;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 3rem 1rem;
+    position: relative;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Background Apple Monochrome Highlights */
+.bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.blob-1 {
+    width: 450px;
+    height: 450px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+    top: -100px;
+    left: -100px;
+    animation: float-slow 20s infinite alternate ease-in-out;
+}
+
+.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.02) 100%);
+    bottom: -150px;
+    right: -150px;
+    animation: float-medium 24s infinite alternate ease-in-out;
+}
+
+.blob-3 {
+    width: 350px;
+    height: 350px;
+    background: linear-gradient(135deg, rgba(245, 245, 247, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+    top: 25%;
+    right: 10%;
+    animation: float-slow 16s infinite alternate ease-in-out;
+}
+
+@keyframes float-slow {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(40px, 30px) scale(1.1);
+    }
+}
+
+@keyframes float-medium {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(-50px, -40px) scale(0.95);
+    }
+}
+
+/* Main Container */
+.glass-container {
+    width: 100%;
+    max-width: 580px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow);
+    padding: 2.25rem;
+    margin-top: 1.5rem;
+    animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.app-header h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    color: var(--text-primary);
+}
+
+/* Buttons */
+.btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.65rem 1.15rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-primary {
+    background: var(--accent-gradient);
+    color: white;
+    box-shadow: 0 4px 12px 0 var(--accent-shadow);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px 0 var(--accent-shadow);
+    filter: brightness(1.03);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+/* Tasks Wrapper */
+.task-list {
+    margin-top: 1rem;
+}
+
+#tasks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Task Item (li) */
+#tasks li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--item-bg);
+    border: 1px solid var(--item-border);
+    padding: 0.85rem 1.15rem;
+    border-radius: 12px;
+    box-shadow: var(--item-shadow);
+    transition: all 0.15s ease-in-out;
+    animation: list-item-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#tasks li:hover {
+    background: var(--glass-bg-hover);
+    transform: translateY(-0.5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+@keyframes list-item-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Task Text element inside list */
+.task-content {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    line-height: 1.45;
+    word-break: break-word;
+    margin-right: 1rem;
+}
+
+/* Task Action Buttons Container */
+.task-actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.task-actions button {
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+/* Edit Button */
+.btn-edit {
+    background: var(--edit-btn-bg);
+    color: var(--edit-btn-text);
+}
+
+.btn-edit:hover {
+    background: var(--edit-btn-text);
+    color: white;
+}
+
+/* Delete Button */
+.btn-del {
+    background: var(--del-btn-bg);
+    color: var(--del-btn-text);
+}
+
+.btn-del:hover {
+    background: var(--del-btn-text);
+    color: white;
+}
+
+/* Glassmorphic Dialog Box */
+.glass-dialog {
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+    width: 90%;
+    max-width: 420px;
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    animation: dialog-scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dialog-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.97) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Backdrop for Dialog */
+.glass-dialog::backdrop {
+    background: rgba(29, 29, 31, 0.12);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.dialog-content {
+    padding: 1.75rem;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.dialog-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+}
+
+/* Close Button (X) */
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+.btn-close:hover {
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* Form Styles inside Dialog */
+#todo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+#task-input {
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 0.75rem 0.95rem;
+    border-radius: 10px;
+    border: 1px solid #d2d2d7;
+    background: #f5f5f7;
+    color: var(--text-primary);
+    outline: none;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+#task-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08);
+    background: white;
+}
+
+.btn-block {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+}
+
+/* Responsive Overrides */
+@media (max-width: 480px) {
+    .glass-container {
+        padding: 1.5rem;
+    }
+
+    .app-header h2 {
+        font-size: 1.4rem;
+    }
+
+    #tasks li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.65rem;
+    }
+
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

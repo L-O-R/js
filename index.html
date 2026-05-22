@@ -4,38 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+    <title>Taskly // Glassmorphic Task Manager</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <main>
-        <header>
+    <!-- Glassmorphic background blobs -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <main class="glass-container">
+        <header class="app-header">
             <h2>My Task Manager</h2>
-            <button command="show-modal" commandfor="dialog_box">Add Task</button>
+            <button id="open_dialog_btn" class="btn btn-primary" command="show-modal" commandfor="dialog_box">
+                <span class="btn-icon">+</span> Add Task
+            </button>
         </header>
-
-        <div>
-
-        </div>
 
         <div class="task-list">
             <ul id="tasks">
-                <!-- Tasks will be added here -->
+                <!-- Tasks will be added dynamically here -->
             </ul>
-
         </div>
     </main>
 
-
-    <!-- dialog box -->
-
-    <dialog id="dialog_box">
-        <button commandfor="dialog_box" command="close">X</button>
-        <form action="">
-            <input type="text" placeholder="Enter your task here" id="task-input">
-            <button type="submit" id="add_task_btn">Add Task</button>
-        </form>
+    <!-- Modal dialog box -->
+    <dialog id="dialog_box" class="glass-dialog">
+        <div class="dialog-content">
+            <header class="dialog-header">
+                <h3>Create New Task</h3>
+                <button class="btn-close" commandfor="dialog_box" command="close" aria-label="Close dialog">×</button>
+            </header>
+            <form action="" id="todo-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter your task here..." id="task-input" required autocomplete="off">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="add_task_btn" class="btn btn-primary btn-block">Add Task</button>
+                </div>
+            </form>
+        </div>
     </dialog>
     <script src="./script.js"></script>
 </body>

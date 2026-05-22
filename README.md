@@ -1,174 +1,273 @@
-**Project Overview**
-- **Purpose**: This small repo demonstrates DOM basics and how to manipulate HTML using JavaScript. It contains a minimal task manager where users add tasks via a form and JavaScript updates the page dynamically.
-- **Learning goals**: Understand selecting elements, handling events, preventing default form behavior, updating the DOM, and rendering lists.
+# ✨ Taskly: Build a Glassmorphic Task Manager from Scratch
 
-**Files**
-- [index.html](index.html): The page markup and structure for the task manager.
-- [script.js](script.js): The JavaScript that implements DOM selection, event handling, and rendering.
+Welcome to **Taskly**! This repository is a beginner-friendly project designed to teach you the fundamentals of modern frontend web development. By building this project, you will learn how to:
 
-**How to run**
-- Open [index.html](index.html) in any modern browser (double-click or use a local dev server).
-- Type a task into the input and click "Add Task" — the task list updates without a page reload.
+1. **Structure webpages** using Semantic HTML5 and `<dialog>` modals.
+2. **Add behavior** using JavaScript (handling event listeners, arrays, and DOM manipulation).
+3. **Persist data** across page reloads using the browser's `localStorage` API.
+4. **Style premium interfaces** using **Glassmorphism** in CSS, featuring animations and smooth transitions.
 
-**Detailed line-by-line explanation**
+---
 
-Below we explain every line in both project files so you can learn what each part does.
+## 🎨 The Glassmorphic Monochrome Design
+**Glassmorphism** is a modern design trend characterized by translucent, glass-like elements that look like they are floating over a background.
 
-**index.html**
+To achieve this premium monochrome style (strictly using black, white, and variants of gray), we rely on five core principles:
+1. **Translucency (`rgba`)**: Semi-transparent backgrounds (`rgba(255, 255, 255, 0.65)`) that let background tones blend organically.
+2. **Backdrop Blur (`backdrop-filter`)**: Applying a Gaussian blur to elements behind the glass container, creating a beautiful frosted glass appearance.
+3. **Reflective Borders**: A thin, semi-transparent border (`1px solid rgba(255, 255, 255, 0.7)`) that simulates light hitting the edge of a sheet of glass.
+4. **Soft Shadows**: Ultra-low opacity drop shadows to give containers depth and separation from the page.
+5. **Monochrome Highlights**: Large, subtle, gray and white linear-gradient highlights floating behind the glass layout to provide subtle depth and organic movement without introducing other colors.
 
-Full source (for reference):
+---
 
+## 📁 Project Architecture
+The project is built using only three files:
+- **`index.html`** — Holds the page structure, UI components, and the modal dialog skeleton.
+- **`style.css`** — Houses our color variables, animated backdrop blobs, and glassmorphic panels.
+- **`script.js`** — Handles adding, editing, deleting, rendering, and saving tasks.
+
+---
+
+## 🛠️ Step-by-Step Build Guide
+
+### Phase 1: Structure the Interface (`index.html`)
+Open [index.html](index.html) to see the markup. Here is how it is structured:
+
+1. **Header & Trigger**: A `<header>` holding the title and the "Add Task" button.
+2. **Task List Area**: A `<main>` container with a `<ul id="tasks">` where our task items are added dynamically by JavaScript.
+3. **Task Creation Modal (`<dialog>`)**: 
+   - We use the native HTML `<dialog>` element.
+   - We trigger and close it using modern HTML **Invoker Commands** (`command="show-modal"` and `commandfor="dialog_box"`) which lets the browser open and close the modal without writing manual JS trigger scripts.
+
+#### Complete `index.html` Code:
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+    <title>Taskly // Glassmorphic Task Manager</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
 </head>
-<body >
-    <main>
-        <header>
-            <h2>My Task Manager</h2>
-        </header>
+<body>
+    <!-- Glassmorphic background blobs -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
 
-        <div>
-            <form action="">
-                <input type="text" placeholder="Enter your task here" id="task-input" >
-                <button type="submit">Add Task</button>
-            </form>
-        </div>
+    <!-- Main Container -->
+    <main class="glass-container">
+        <header class="app-header">
+            <h2>My Task Manager</h2>
+            <button class="btn btn-primary" command="show-modal" commandfor="dialog_box">
+                <span class="btn-icon">+</span> Add Task
+            </button>
+        </header>
 
         <div class="task-list">
             <ul id="tasks">
-                <!-- Tasks will be added here -->
+                <!-- Tasks will be added dynamically here -->
             </ul>
-
         </div>
     </main>
-<script src="./script.js"></script>
+
+    <!-- Modal dialog box -->
+    <dialog id="dialog_box" class="glass-dialog">
+        <div class="dialog-content">
+            <header class="dialog-header">
+                <h3>Create New Task</h3>
+                <button class="btn-close" commandfor="dialog_box" command="close" aria-label="Close dialog">×</button>
+            </header>
+            <form action="" id="todo-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter your task here..." id="task-input" required autocomplete="off">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="add_task_btn" class="btn btn-primary btn-block">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+    <script src="./script.js"></script>
 </body>
 </html>
 ```
 
-Line-by-line explanation:
+---
 
-- `<!DOCTYPE html>`: Declares the document is HTML5; helps the browser render in standards mode.
-- `<html lang="en">`: Root element; `lang` attribute helps accessibility and search engines know the page language.
-- `<head>`: Metadata container (content here is not directly visible on the page).
-- `<meta charset="UTF-8">`: Declares the character encoding to UTF-8 so characters render correctly.
-- `<meta name="viewport" content="width=device-width, initial-scale=1.0">`: Ensures responsive scaling on mobile devices.
-- `<title>Document</title>`: Title shown in the browser tab; you can change it to something descriptive like "Task Manager".
-- `</head>`: Closes the head section.
-- `<body >`: Page body; visible content goes here.
-- `<main>`: Semantic container for the main content of the page.
-- `<header>`: Semantic header inside the main area.
-- `<h2>My Task Manager</h2>`: Heading shown at the top of the page.
-- `</header>`: Ends the header.
-- `<div>`: Generic container used here to group the form.
-- `<form action="">`: The form element groups input controls. The empty `action` means the form won't submit to a server; JavaScript will handle submission. If left empty, browsers default to the current URL — but the script calls `event.preventDefault()` to stop navigation.
-- `<input type="text" placeholder="Enter your task here" id="task-input" >`: The text input where users type tasks; the `id` can be used to select this element from JavaScript. `placeholder` gives an in-field hint.
-- `<button type="submit">Add Task</button>`: A submit button for the form. When clicked, it triggers the form's `submit` event.
-- `</form>`: Closes the form.
-- `</div>`: Closes the wrapper `div` around the form.
-- `<div class="task-list">`: A container with a class `task-list` for styling or selection.
-- `<ul id="tasks">`: An unordered list element where the script will append `<li>` items for each task. The `id` `tasks` is used to select it in JavaScript.
-- `<!-- Tasks will be added here -->`: An HTML comment for humans reading the file.
-- `</ul>`: Closes the list.
-- `</div>`: Closes the `task-list` container.
-- `</main>`: Closes the main element.
-- `<script src="./script.js"></script>`: Loads the JavaScript file. Placing it before `</body>` ensures the DOM is parsed before the script runs (so `document.querySelector` and `getElementById` can find elements).
-- `</body>`: Closes the body element.
-- `</html>`: Closes the HTML document.
+### Phase 2: Create the Design Layer (`style.css`)
+Open [style.css](style.css). Let's review the critical rules that construct the glassmorphism aesthetic:
 
-**script.js**
+1. **CSS Variables (`:root`)**: Store our colors, opacity layers, and transitions so they can be easily customized in one location.
+2. **Floating Highlights**: Animated using `@keyframes float-slow` and `@keyframes float-medium` with `filter: blur(100px)`. This generates the ambient depth.
+3. **Glass Panels (`.glass-container`, `.glass-dialog`)**:
+   - `background: rgba(255, 255, 255, 0.65)` makes it translucent.
+   - `backdrop-filter: blur(25px)` adds the frosted-glass effect.
+   - `border: 1px solid rgba(255, 255, 255, 0.7)` builds the shiny glass edges.
+4. **Dialog Backdrop (`.glass-dialog::backdrop`)**: Styles the overlay when the modal is active, giving a frosted look to the whole screen.
 
-Full source (for reference):
-
-```javascript
-let todoForm = document.querySelector("form")
-
-
-let todoList = [];
-todoForm.addEventListener("submit", (event) => {
-  event.preventDefault()
-  //  validation
-  let task = event.target[0].value
-
-  todoList.push(task);
-  render()
-  event.target[0].value = ""
-})
-
-let task_container = document.getElementById('tasks')
-
-function render(){
-  task_container.innerHTML = "";
-
-  todoList.forEach(
-    (task) =>{
-      let li = document.createElement('li')
-      li.innerText = task
-
-      task_container.appendChild(li)
-    }
-  )
+#### Key CSS Glassmorphism Rules:
+```css
+.glass-container {
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.03);
 }
 ```
 
-Line-by-line explanation:
+---
 
-- `let todoForm = document.querySelector("form")`: Selects the first `<form>` element in the document and stores it in the variable `todoForm`. `document.querySelector` returns the first match; useful for CSS selectors.
+### Phase 3: Implement the Application Logic (`script.js`)
+Open [script.js](script.js). Let's explain how the code manages state, handles forms, and performs CRUD operations.
 
-- (blank line): Improves readability; no effect at runtime.
-- `let todoList = [];`: Initializes an empty JavaScript array `todoList` that will hold the user's tasks.
-
-- `todoForm.addEventListener("submit", (event) => {`: Attaches an event listener to the form for the `submit` event. When the user clicks the submit button or presses Enter in the input, this callback runs. The callback receives an `event` object.
-
-- `  event.preventDefault()`: Prevents the browser's default submit behavior (which would reload or navigate the page). This lets JavaScript handle the data without a page reload.
-
-- `  //  validation`: A comment indicating where you could add input validation (e.g., check the input isn't empty). Right now no actual validation code is implemented.
-- `  let task = event.target[0].value`: Reads the value of the first form control (index 0) from `event.target`, which is the form element. This retrieves the text the user typed. Note: using `event.target.elements` or `document.getElementById('task-input')` is often clearer than numeric indexes.
-- `  todoList.push(task);`: Adds the new task string to the `todoList` array.
-- `  render()`: Calls the `render` function to update the DOM and show the current tasks.
-- `  event.target[0].value = ""`: Clears the input field after adding the task so the user can type a new task.
-- `})`: Closes the `submit` event listener callback.
-- (blank line): Readability.
-- `let task_container = document.getElementById('tasks')`: Selects the `<ul>` with `id="tasks"` and stores it in `task_container` so the script can add `<li>` items.
-- (blank line): Readability.
-- `function render(){`: Declares the `render` function which updates the visible task list.
-- `  task_container.innerHTML = "";`: Empties the `<ul>` before rendering. This prevents duplicate items when re-rendering the entire list.
-- (blank line): Readability.
-- `  todoList.forEach(`: Iterates over each item in `todoList`.
-- `    (task) =>{`: For each `task` string, run the following arrow-function body.
-- `      let li = document.createElement('li')`: Creates a new `<li>` element.
-- `      li.innerText = task`: Sets the text content of the `<li>` to the task string. `innerText` preserves simple text; `textContent` is an alternative.
-- (blank line): Readability.
-- `      task_container.appendChild(li)`: Appends the `<li>` to the `<ul>` so it becomes visible on the page.
-- `    }`: Close the arrow function body.
-- `  )`: Close `forEach`.
-- `}`: Close the `render` function.
-
-**Notes & Improvements**
-
-- Validation: Check for empty strings or whitespace before pushing to `todoList`. Example: `if (!task.trim()) return;` before `todoList.push(task)`.
-- Use explicit selectors: Replace `event.target[0]` with `document.getElementById('task-input')` or `todoForm.elements['task-input']` for clarity and stability.
-- Persisting data: To keep tasks between page reloads, save `todoList` to `localStorage` and load it on page load.
-- Removing items: Add a delete button on each `<li>` and remove the corresponding item from `todoList`, then call `render()`.
-- Avoid resetting `innerHTML` repeatedly for large lists — consider updating nodes incrementally or using a document fragment for performance.
-
-**Quick example: simple validation change**
-
-Replace the line `let task = event.target[0].value` and the following `push` with:
+#### 1. DOM Elements & State Setup
+We fetch DOM handles using `document.getElementById` and fetch our saved list (or default to an empty array) from local storage. We also add an event listener to the "Add Task" button on the main container to reset the modal state to "Add Task" mode (preventing residual "Edit Task" state if the user cancels an edit).
 
 ```javascript
-let input = document.getElementById('task-input')
-let task = input.value.trim()
-if (!task) return // don't add empty tasks
-todoList.push(task)
+let add_task_btn = document.getElementById("add_task_btn");
+let dialog_box = document.getElementById("dialog_box");
+let task_input = document.getElementById("task-input");
+let open_dialog_btn = document.getElementById("open_dialog_btn");
+let todoForm = document.getElementById("todo-form");
+let task_container = document.getElementById('tasks');
+
+let EDITABLE = false;          // True when we are in edit mode
+let indexNoToChange = null;    // Tracks index of task being edited
+let todoList = getDataFromLocalStorage();
+
+// Open modal and reset state to "Add Task" mode
+if (open_dialog_btn) {
+  open_dialog_btn.addEventListener('click', (event) => {
+    // If the browser supports invoker commands naturally, we don't call showModal to avoid double opens
+    if (!event.target.closest('button').hasAttribute('command')) {
+      dialog_box.showModal();
+    }
+    // Always reset form state
+    EDITABLE = false;
+    indexNoToChange = null;
+    add_task_btn.innerText = "Add Task";
+    task_input.value = "";
+  });
+}
 ```
 
-This trims whitespace and prevents empty tasks from being added.
+#### 2. Managing Form Submission (Adding or Editing)
+When the user submits the form, we:
+- Call `event.preventDefault()` to stop the browser from refreshing the page.
+- Grab the trimmed input text. If it is empty, we abort.
+- If in editing mode (`EDITABLE = true`), we overwrite the value at `todoList[indexNoToChange]`, reset variables, and change the button label back to "Add Task".
+- If in regular mode, we push the new task to the array.
+- Save to localStorage, render the list, empty the text input, and close the dialog modal.
+
+```javascript
+todoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  let task = task_input.value.trim();
+  if (!task) return;
+
+  if (EDITABLE) {
+    todoList[indexNoToChange] = task;
+    EDITABLE = false;
+    indexNoToChange = null;
+    add_task_btn.innerText = "Add Task";
+  } else {
+    todoList.push(task);
+  }
+  
+  saveDataToLocalStorage(todoList);
+  render();
+  task_input.value = "";
+  dialog_box.close();
+});
+```
+
+#### 3. Dynamic DOM Rendering (Read, Update, Delete)
+Instead of hardcoding HTML structure, JavaScript builds each task item inside the `render()` function:
+- We clear `task_container.innerHTML = ""` to start fresh.
+- We loop through `todoList` using `forEach`.
+- For each task, we create a list item (`<li>`) and wrap the text in a `<span class="task-content">`.
+- We create an **Edit** and **Delete** button:
+  - **Edit Button Listener**: Triggers the modal dialog, populates the input with the current task text, sets the button to say "Edit Task", and enables `EDITABLE = true`.
+  - **Delete Button Listener**: Confirms the delete action. If approved, removes the task from the array using `todoList.splice(index, 1)`, updates storage, and triggers a re-render.
+- We append elements into the DOM tree.
+
+```javascript
+function render() {
+  task_container.innerHTML = "";
+  
+  todoList.forEach((task, index) => {
+    let li = document.createElement('li');
+    
+    let task_text = document.createElement('span');
+    task_text.className = 'task-content';
+    task_text.innerText = task;
+    li.appendChild(task_text);
+
+    let actions_container = document.createElement('div');
+    actions_container.className = 'task-actions';
+
+    // Edit Button
+    let edit_btn = document.createElement('button');
+    edit_btn.className = 'btn-edit';
+    edit_btn.innerText = 'Edit';
+    edit_btn.addEventListener('click', () => {
+      dialog_box.showModal();
+      task_input.value = task;
+      add_task_btn.innerText = "Edit Task";
+      EDITABLE = true;
+      indexNoToChange = index;
+    });
+
+    // Delete Button
+    let del_btn = document.createElement('button');
+    del_btn.className = 'btn-del';
+    del_btn.innerText = 'Delete';
+    del_btn.addEventListener('click', () => {
+      if (confirm('Do you really want to delete this task?')) {
+        todoList.splice(index, 1);
+        saveDataToLocalStorage(todoList);
+        render();
+      }
+    });
+
+    actions_container.appendChild(edit_btn);
+    actions_container.appendChild(del_btn);
+    li.appendChild(actions_container);
+    task_container.appendChild(li);
+  });
+}
+```
+
+#### 4. Local Storage Engine
+`localStorage` only stores strings. We use `JSON.stringify` to transform our array into a JSON string before saving, and `JSON.parse` to turn it back into a JavaScript array when reading:
+```javascript
+function saveDataToLocalStorage(todoListArray) {
+  localStorage.setItem('todolist', JSON.stringify(todoListArray));
+}
+
+function getDataFromLocalStorage() {
+  return JSON.parse(localStorage.getItem('todolist')) || [];
+}
+```
 
 ---
+
+## 🚀 How to Run the App
+Since this is a standard client-side project, you do not need to build, install, or run anything from the command line!
+1. Double-click [index.html](index.html) to open it in your browser.
+2. Alternatively, if you use VS Code, right-click `index.html` and choose **Open with Live Server** to run it on a local port.
+
+---
+
+## 🌟 Challenges for Beginners
+Ready to level up? Try adding these features on your own:
+- **Task Checkboxes**: Add a checkbox next to each task to mark them as "completed". Apply a line-through styling (`text-decoration: line-through`) to completed tasks.
+- **Priority Badges**: Add a priority selector (Low, Medium, High) in the dialog modal and display color-coded tags on each task.
+- **Theme Switcher**: Add a button to toggle between this light glassmorphic theme and a sleek dark glassmorphic theme by swapping out the CSS root variables.
