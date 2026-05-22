@@ -1,30 +1,22 @@
-# ✨ Taskly: Build a Glassmorphic Task Manager from Scratch
+# ✨ Taskly: Build a Task Manager from Scratch
 
-Welcome to **Taskly**! This repository is a beginner-friendly project designed to teach you the fundamentals of modern frontend web development. By building this project, you will learn how to:
+Welcome to **Taskly**! This repository is a beginner-friendly project designed to teach you the fundamentals of modern frontend web development.
+
+> [!NOTE]
+> **Main Focus**: This project and step-by-step guide focus primarily on **HTML structure** and **JavaScript logic**. The CSS styling (`style.css`) is provided to give the application a premium look, but styling concepts and techniques are not the main focus of this tutorial.
+
+By building this project, you will learn how to:
 
 1. **Structure webpages** using Semantic HTML5 and `<dialog>` modals.
 2. **Add behavior** using JavaScript (handling event listeners, arrays, and DOM manipulation).
 3. **Persist data** across page reloads using the browser's `localStorage` API.
-4. **Style premium interfaces** using **Glassmorphism** in CSS, featuring animations and smooth transitions.
-
----
-
-## 🎨 The Glassmorphic Monochrome Design
-**Glassmorphism** is a modern design trend characterized by translucent, glass-like elements that look like they are floating over a background.
-
-To achieve this premium monochrome style (strictly using black, white, and variants of gray), we rely on five core principles:
-1. **Translucency (`rgba`)**: Semi-transparent backgrounds (`rgba(255, 255, 255, 0.65)`) that let background tones blend organically.
-2. **Backdrop Blur (`backdrop-filter`)**: Applying a Gaussian blur to elements behind the glass container, creating a beautiful frosted glass appearance.
-3. **Reflective Borders**: A thin, semi-transparent border (`1px solid rgba(255, 255, 255, 0.7)`) that simulates light hitting the edge of a sheet of glass.
-4. **Soft Shadows**: Ultra-low opacity drop shadows to give containers depth and separation from the page.
-5. **Monochrome Highlights**: Large, subtle, gray and white linear-gradient highlights floating behind the glass layout to provide subtle depth and organic movement without introducing other colors.
 
 ---
 
 ## 📁 Project Architecture
 The project is built using only three files:
 - **`index.html`** — Holds the page structure, UI components, and the modal dialog skeleton.
-- **`style.css`** — Houses our color variables, animated backdrop blobs, and glassmorphic panels.
+- **`style.css`** — Houses our stylesheet, layout styles, and color variables.
 - **`script.js`** — Handles adding, editing, deleting, rendering, and saving tasks.
 
 ---
@@ -47,7 +39,7 @@ Open [index.html](index.html) to see the markup. Here is how it is structured:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taskly // Glassmorphic Task Manager</title>
+    <title>Taskly // Task Manager</title>
     <!-- Google Fonts for premium typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +47,7 @@ Open [index.html](index.html) to see the markup. Here is how it is structured:
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <!-- Glassmorphic background blobs -->
+    <!-- Background decorative blobs -->
     <div class="bg-blob blob-1"></div>
     <div class="bg-blob blob-2"></div>
     <div class="bg-blob blob-3"></div>
@@ -100,31 +92,7 @@ Open [index.html](index.html) to see the markup. Here is how it is structured:
 
 ---
 
-### Phase 2: Create the Design Layer (`style.css`)
-Open [style.css](style.css). Let's review the critical rules that construct the glassmorphism aesthetic:
-
-1. **CSS Variables (`:root`)**: Store our colors, opacity layers, and transitions so they can be easily customized in one location.
-2. **Floating Highlights**: Animated using `@keyframes float-slow` and `@keyframes float-medium` with `filter: blur(100px)`. This generates the ambient depth.
-3. **Glass Panels (`.glass-container`, `.glass-dialog`)**:
-   - `background: rgba(255, 255, 255, 0.65)` makes it translucent.
-   - `backdrop-filter: blur(25px)` adds the frosted-glass effect.
-   - `border: 1px solid rgba(255, 255, 255, 0.7)` builds the shiny glass edges.
-4. **Dialog Backdrop (`.glass-dialog::backdrop`)**: Styles the overlay when the modal is active, giving a frosted look to the whole screen.
-
-#### Key CSS Glassmorphism Rules:
-```css
-.glass-container {
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.03);
-}
-```
-
----
-
-### Phase 3: Implement the Application Logic (`script.js`)
+### Phase 2: Implement the Application Logic (`script.js`)
 Open [script.js](script.js). Let's explain how the code manages state, handles forms, and performs CRUD operations.
 
 #### 1. DOM Elements & State Setup
@@ -270,4 +238,4 @@ Since this is a standard client-side project, you do not need to build, install,
 Ready to level up? Try adding these features on your own:
 - **Task Checkboxes**: Add a checkbox next to each task to mark them as "completed". Apply a line-through styling (`text-decoration: line-through`) to completed tasks.
 - **Priority Badges**: Add a priority selector (Low, Medium, High) in the dialog modal and display color-coded tags on each task.
-- **Theme Switcher**: Add a button to toggle between this light glassmorphic theme and a sleek dark glassmorphic theme by swapping out the CSS root variables.
+- **Theme Switcher**: Add a button to toggle between a light theme and a sleek dark theme by swapping out the CSS root variables.
