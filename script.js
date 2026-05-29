@@ -1,3 +1,6 @@
+
+import { saveDataToLocalStorage, getDataFromLocalStorage } from "./localStorage.js";
+
 let add_task_btn = document.getElementById("add_task_btn")
 let dialog_box = document.getElementById("dialog_box")
 let task_input = document.getElementById("task-input")
@@ -28,7 +31,7 @@ if (open_dialog_btn) {
 
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault()
-  
+
   // Validation: trim input and prevent empty items
   let task = task_input.value.trim()
   if (!task) {
@@ -47,7 +50,7 @@ todoForm.addEventListener("submit", (event) => {
     todoList.push(task);
     saveDataToLocalStorage(todoList)
   }
-  
+
   render()
   task_input.value = ""
   dialog_box.close() // Automatically close dialog on submit
@@ -57,10 +60,10 @@ let task_container = document.getElementById('tasks')
 
 function render() {
   task_container.innerHTML = "";
-  
+
   todoList.forEach((task, index) => {
     let li = document.createElement('li')
-    
+
     // Wrap task text in span for cleaner styling and wrapping
     let task_text = document.createElement('span')
     task_text.className = 'task-content'
@@ -110,10 +113,3 @@ function render() {
 render()
 
 // Local Storage Helper Functions
-function saveDataToLocalStorage(todoListArray) {
-  localStorage.setItem('todolist', JSON.stringify(todoListArray))
-}
-
-function getDataFromLocalStorage() {
-  return JSON.parse(localStorage.getItem('todolist')) || [];
-}
